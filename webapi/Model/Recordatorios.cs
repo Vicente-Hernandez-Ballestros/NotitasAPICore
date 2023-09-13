@@ -4,6 +4,6 @@ namespace webapi.Model
     {
         public ulong idRecordatorios { get; set; }
         public int notitas_id { get; set; }
-        public string fecha_recordatorio { get; set; }
+        public DateTime fecha_recordatorio { get; set; }
     }
 }

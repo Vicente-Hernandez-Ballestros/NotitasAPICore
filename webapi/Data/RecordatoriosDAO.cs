@@ -25,7 +25,7 @@ namespace webapi.Data
         public Recordatorios GetOneById(int idRecordatorio)
         {
             var ad = new AccesoDatos();
-            Recordatorios recordatorios = null;
+            Recordatorios recordatorio = null;
 
             using (ad)
             {
@@ -36,16 +36,23 @@ namespace webapi.Data
 
                 while (reader.Read())
                 {
-                    recordatorios = new Recordatorios
+                    recordatorio = new Recordatorios();
+                    recordatorio.idRecordatorios = (ulong)reader.GetInt32("idRecordatorios");
+                    recordatorio.notitas_id = reader.GetInt32("notitas_id");
+
+                    if (!reader.IsDBNull(reader.GetOrdinal("fecha_recordatorio")))
                     {
-                        idRecordatorios = reader.GetUInt64("idRecordatorios"),
-                        notitas_id = reader.GetInt32("notitas_id"),
-                        fecha_recordatorio = reader.GetString("fecha_recordatorio"),
-                    };
+                        recordatorio.fecha_recordatorio = reader.GetDateTime(reader.GetOrdinal("fecha_recordatorio"));
+                    }
+                    else
+                    {
+                        recordatorio.fecha_recordatorio = DateTime.MinValue;
+                    }
+
                 }
             }
 
-            return recordatorios;
+            return recordatorio;
         }
 
 

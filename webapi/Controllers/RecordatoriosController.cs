@@ -24,9 +24,10 @@ namespace webapi.Controllers
 
         // GET api/<RecordatoriosController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var recordatorio = new RecordatoriosDAO().GetOneById(id);
+            return recordatorio == null ? NotFound() : Ok(recordatorio);
         }
 
         // POST api/<RecordatoriosController>
